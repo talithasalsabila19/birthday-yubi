@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>yubii🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Fraunces:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#fff3e6;--gold:#ffc95c;--rose:#ff8fa3;--night:#1d1230;--paper:#fffaf0;--txt:#4a3350;--title:#b75c7a}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:var(--night);color:var(--ink);font-family:Nunito,system-ui,sans-serif}
+#bg{position:fixed;inset:0;background:linear-gradient(160deg,#3a1d5c,#1d1230 60%,#5a1f45) center/cover}
+#bg::after{content:"";position:absolute;inset:0;background:rgba(20,10,35,.45)}
+h1,h2{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.2}
+/* ===== LAYAR KUE ===== */
+#intro{position:fixed;z-index:2;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;transition:opacity .8s,visibility .8s}
+#intro.off{opacity:0;visibility:hidden}
+#intro h1{font-size:1.7rem;font-style:italic;font-weight:400}
+#hint{color:var(--gold);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+#cake{position:relative;z-index:3;width:min(78vw,320px);cursor:pointer;overflow:visible;touch-action:manipulation}
+#flame{transform-origin:150px 62px;animation:flick .35s infinite alternate;transition:opacity .3s}
+@keyframes flick{to{transform:scale(1.08,.94) rotate(3deg)}}
+#cake.out #flame{opacity:0;animation:none}
+#smoke{opacity:0;transition:opacity .4s}
+#cake.out #smoke{opacity:.8;animation:rise 1.6s forwards}
+@keyframes rise{to{transform:translateY(-30px);opacity:0}}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:5}
+/* ===== STIKER MELAYANG ===== */
+#cards{position:fixed;inset:0;opacity:0;visibility:hidden;transition:opacity 1s .2s}
+#cards.on{opacity:1;visibility:visible}
+#stickers{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.fl{position:absolute;bottom:-90px;left:var(--left);width:var(--size);opacity:0;animation:floatUp var(--duration) linear var(--delay) infinite;will-change:transform,opacity}
+.fl svg,.stk svg{width:100%;height:auto;display:block}
+@keyframes floatUp{0%{transform:translate3d(0,0,0) rotate(-12deg);opacity:0}10%{opacity:.85}50%{transform:translate3d(var(--drift),-55vh,0) rotate(12deg)}90%{opacity:.75}100%{transform:translate3d(calc(var(--drift)*-.5),-115vh,0) rotate(-8deg);opacity:0}}
+/* ===== BUKU ===== */
+#track{position:relative;z-index:1;height:100%;display:flex;align-items:center;justify-content:center;padding:50px 0 70px}
+#book{position:relative;width:min(86vw,430px);height:min(calc(100vh - 170px),640px);height:min(calc(100dvh - 170px),640px);min-height:340px;perspective:1800px;touch-action:pan-y}
+/* sampul kulit di belakang + tumpukan kertas */
+#book::before{content:"";position:absolute;z-index:-1;inset:-9px -9px -10px -13px;border-radius:7px 15px 15px 7px;background:linear-gradient(90deg,#8c3b5a,#b75c7a 9%,#cf7592);box-shadow:0 26px 44px rgba(0,0,0,.5)}
+#book::after{content:"";position:absolute;z-index:0;inset:3px 0 0 0;background:var(--paper);border-radius:3px 9px 9px 3px;box-shadow:2px 2px 0 #eadcc4,4px 4px 0 #e0cfb3,6px 6px 0 #d6c4a5}
+.leaf{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;will-change:transform;transition:transform 1.05s cubic-bezier(.5,.05,.2,1),visibility 0s}
+.leaf.flipped{transform:rotateY(-180deg);visibility:hidden;transition:transform 1.05s cubic-bezier(.5,.05,.2,1),visibility 0s 1.05s}
+.face{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:3px 10px 10px 3px;background:var(--paper);box-shadow:0 1px 5px rgba(60,30,40,.25);color:var(--txt)}
+.back{transform:rotateY(180deg);border-radius:10px 3px 3px 10px;background:repeating-linear-gradient(to bottom,transparent 0 31px,rgba(116,83,119,.07) 31px 32px),var(--paper)}
+.back::before{content:"";position:absolute;inset:0 0 0 auto;width:26px;background:linear-gradient(270deg,rgba(90,55,40,.22),transparent)}
+.back.endp{background:radial-gradient(circle,#ffc2d4 2px,transparent 2.6px) 0 0/18px 18px,#fff0f3}
+.front:not(.cov)::before{content:"";position:absolute;inset:0 auto 0 0;width:26px;background:linear-gradient(90deg,rgba(90,55,40,.22),transparent)}
+.front:not(.cov)::after{content:"";position:absolute;right:0;bottom:0;width:28px;height:28px;background:linear-gradient(315deg,#dfcdb0 0 49%,var(--paper) 51%);opacity:.85}
+.pc{position:absolute;inset:0;padding:30px 24px 44px 36px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#e0b9c3 transparent;background:repeating-linear-gradient(to bottom,transparent 0 31px,rgba(116,83,119,.07) 31px 32px) local}
+.pc h2{font-size:1.45rem;color:var(--title);text-align:center;margin:2px 0 16px;padding:0 26px;overflow-wrap:anywhere}
+.pc p{white-space:pre-line;line-height:32px;font-size:.98rem;overflow-wrap:anywhere}
+.pn{position:absolute;bottom:12px;left:0;right:0;text-align:center;font:normal .75rem Nunito,sans-serif;opacity:.5}
+.endfoto{display:block;width:100%;max-height:280px;object-fit:cover;border-radius:12px;margin:18px auto 0;box-shadow:0 4px 12px rgba(60,30,50,.22)}
+.again{display:block;margin:20px auto 0;background:var(--rose);color:#3a1020;border:0;padding:10px 22px;border-radius:30px;font:600 1rem Nunito;cursor:pointer}
+/* polaroid */
+.pc.photo{display:flex;align-items:center;justify-content:center;overflow:hidden;padding:34px 22px 44px 30px;background:none}
+.pol{position:relative;display:flex;flex-direction:column;width:78%;max-height:100%;min-height:0;background:#fff;padding:10px 10px 8px;border-radius:3px;box-shadow:0 7px 18px rgba(60,30,50,.28);transform:rotate(-2deg)}
+.pol img{flex:1 1 auto;min-height:0;width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.tape{position:absolute;top:-13px;left:50%;width:86px;height:24px;margin-left:-43px;transform:rotate(3deg);background:repeating-linear-gradient(45deg,rgba(255,255,255,.4) 0 6px,transparent 6px 12px),rgba(255,176,201,.75);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.cap{font:500 1.35rem/1.25 Caveat,cursive;color:#8a4b66;text-align:center;padding:8px 4px 2px}
+.ph{display:none;padding:70px 10px;text-align:center;color:#a58aa8;background:#f8efe0}
+/* sampul depan */
+.cov{background:linear-gradient(135deg,#d4708f,#a8466a);color:#ffe9b0;display:flex;align-items:center;justify-content:center;text-align:center;box-shadow:inset 12px 0 14px rgba(0,0,0,.22)}
+.cov::before{content:"";position:absolute;inset:16px;border:2px dashed rgba(255,233,176,.7);border-radius:5px 12px 12px 5px}
+.cov h1{font-size:2rem;font-style:italic;margin-bottom:10px;text-shadow:0 2px 4px rgba(0,0,0,.25)}
+.cov p{font:500 1.6rem Caveat,cursive}
+/* stiker di halaman */
+.stk{position:absolute;z-index:3;width:var(--s);transform:rotate(var(--r));pointer-events:none;filter:drop-shadow(0 2px 2px rgba(80,40,60,.28))}
+.stk img{width:100%;display:block}
+/* navigasi */
+#nav{position:fixed;z-index:10;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);display:flex;justify-content:center;align-items:center;gap:14px}
+#dots{display:flex;gap:7px}
+#dots i{width:7px;height:7px;border-radius:50%;background:#fff5;transition:.3s}
+#dots i.a{background:var(--gold);width:20px;border-radius:5px}
+.btn{background:none;border:1px solid #fff5;color:var(--ink);width:38px;height:38px;border-radius:50%;font-size:1.1rem;cursor:pointer}
+#mute{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);right:14px;z-index:6}
+@media (prefers-reduced-motion:reduce){#flame,.fl{animation:none}.leaf{transition-duration:.01s}}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+
+<section id="intro">
+  <h1 id="judul"></h1>
+  <svg id="cake" viewBox="0 0 300 290" aria-label="Kue ulang tahun">
+    <g id="smoke" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M150 60c-8-14 8-20 0-34M158 58c-6-10 6-16 0-26"/></g>
+    <g id="flame"><path d="M150 28c14 16 14 28 0 34-14-6-14-18 0-34z" fill="#ffb02e"/><path d="M150 40c7 8 7 14 0 18-7-4-7-10 0-18z" fill="#fff1a8"/></g>
+    <rect x="145" y="62" width="10" height="44" rx="3" fill="#ff8fa3"/><path d="M145 74l10 6M145 88l10 6" stroke="#fff" stroke-width="3"/>
+    <rect x="70" y="106" width="160" height="62" rx="10" fill="#ffe3c2"/>
+    <path d="M70 120q16 18 32 0t32 0 32 0 32 0v-8q0-6-6-6H76q-6 0-6 6z" fill="#ff8fa3"/>
+    <rect x="30" y="168" width="240" height="84" rx="12" fill="#ffc7d1"/>
+    <path d="M30 184q20 22 40 0t40 0 40 0 40 0 40 0v-8q0-8-8-8H38q-8 0-8 8z" fill="#fff3e6"/>
+    <circle cx="70" cy="226" r="6" fill="#ffc95c"/><circle cx="150" cy="232" r="6" fill="#ffc95c"/><circle cx="230" cy="226" r="6" fill="#ffc95c"/>
+    <ellipse cx="150" cy="262" rx="150" ry="14" fill="#fff3e6" opacity=".9"/>
+  </svg>
+  <p id="hint">Sentuh lilinnya ya ✨</p>
+</section>
+
+<section id="cards">
+  <button class="btn" id="mute" aria-label="Musik">♪</button>
+  <div id="stickers" aria-hidden="true"></div>
+  <div id="track"><div id="book"></div></div>
+  <div id="nav"><button class="btn" id="prev" aria-label="Sebelumnya">‹</button><div id="dots"></div><button class="btn" id="next" aria-label="Berikutnya">›</button></div>
+</section>
+<canvas id="fx"></canvas>
+<audio id="lagu" loop preload="auto"></audio>
+
+<script>
+/* =====================================================
+   ✏️ BAGIAN YANG BOLEH KAMU UBAH (cukup edit di sini)
+   ===================================================== */
+const CONFIG = {
+  judulAwal: "Selamat ulang tahun, yubii 🎂",
+  sampul: { judul: "Untuk Yubii", sub: "dari tata 🤍" },   // tulisan di sampul buku
+  background: "foto/bg.jpg",     // foto background hasil editanmu
+  lagu: "lagu/lagu.mp3",         // lagumu
+  // stiker tambahan (opsional): file PNG di folder stiker/ ATAU link gambar langsung (.png)
+  stikerKustom: [
+    // "stiker/s1.png", "stiker/s2.png", "https://contoh.com/stiker.png"
+  ],
+  slides: [
+    { type: "teks", judul: "happy birthday yubi!!",
+     isi: "haloo yubii, happy birthday!! semoga panjang umurr dan sehatt selalu yaa sayang! ga kerasa yaa kamu udah tuaa sekarangg hihi." },
+    { type: "foto", src: "foto/1.jpg", caption: "kamu lucu banget disinii" },
+    { type: "teks", judul: "buat yubii dari tataa",
+      isi: "btw, thank you for being this strong yaa. \n i say this because aku mungkin ga tau tahun tahun sebelumnya jadi tahun yang sulit buat kamu, and i really sorry karena gabisa hadir saat kamu lagi sedih and need a hug. but i’m always here for you, and i’ll support you no matter what 🤍 \n\n " },
+    { type: "teks" ,
+      isi: "terimakasih karna terus jadi yubi yang tata kenal dan jangan pernah nyerah buat ngejalanin hidup yang emang susah ini yaa, aku janji kita pasti ketemu someday! and i’ll always be waiting for that “day”"},
+    { type: "teks",
+      isi: "aku minta maaf kalo dulu mungkin aku trlalu kekanakan or because we’re in a long distance relationship jadi kita agak susah kalo ga komunikasi lewat hp. jadi, i hope we can stay together for the rest of our lives. jangann berubah ya yubi🤍 \n\nthank you for filling my heart with so much love, dan tetep semangat tentaraannya yaa i love you very very very much al ayubi❤️" },
+    { type: "akhir", judul: "I love you 💖", isi: "Sekali lagi, selamat ulang tahun!", foto: "foto/akhir.jpg" }
+  ]
+};
+/* ===================== SELESAI ===================== */
+
+const $ = s => document.querySelector(s);
+const el = (c, t = 'div', x = '') => { const e = document.createElement(t); if (c) e.className = c; if (x) e.textContent = x; return e; };
+const audio = $('#lagu'), book = $('#book');
+$('#judul').textContent = CONFIG.judulAwal;
+const im0 = new Image(); im0.onload = () => $('#bg').style.backgroundImage = `linear-gradient(#0000,#0000),url("${CONFIG.background}")`; im0.src = CONFIG.background;
+audio.src = CONFIG.lagu;
+
+// ---------- stiker (gambar vektor buatan sendiri, aman & tidak bisa rusak) ----------
+const SV = b => `<svg viewBox="0 0 48 48" stroke="#fff" stroke-width="4" stroke-linejoin="round" paint-order="stroke">${b}</svg>`;
+const BUILTIN = [
+  SV('<path d="M24 42C7 30 5 18 12 12c5-4 10-2 12 3 2-5 7-7 12-3 7 6 5 18-12 30z" fill="#ff9eb5"/>'),
+  SV('<path d="M24 4l6 13 14 2-10 10 3 14-13-7-13 7 3-14L4 19l14-2z" fill="#ffe27a"/>'),
+  SV('<g fill="#ffc2d4"><circle cx="24" cy="12" r="9"/><circle cx="36" cy="21" r="9"/><circle cx="31" cy="35" r="9"/><circle cx="17" cy="35" r="9"/><circle cx="12" cy="21" r="9"/></g><circle cx="24" cy="25" r="6" fill="#ffd166"/>'),
+  SV('<path d="M24 24L5 11v26zM24 24l19-13v26z" fill="#ff8fab"/><rect x="19" y="18" width="10" height="12" rx="4" fill="#ff6f91"/>'),
+  SV('<g fill="#c9b1ff"><ellipse cx="14" cy="17" rx="11" ry="10"/><ellipse cx="34" cy="17" rx="11" ry="10"/><ellipse cx="16" cy="34" rx="8" ry="8"/><ellipse cx="32" cy="34" rx="8" ry="8"/></g><rect x="22.5" y="10" width="3" height="30" rx="1.5" fill="#7a5c93"/>'),
+  SV('<path d="M12 38a9 9 0 010-18 12 12 0 0123-3 10 10 0 013 21z" fill="#bfe3ff"/>'),
+  SV('<path d="M24 3c2 13 8 19 21 21-13 2-19 8-21 21-2-13-8-19-21-21 13-2 19-8 21-21z" fill="#fff0a0"/>')
+];
+const POOL = [...(CONFIG.stikerKustom || []), ...BUILTIN];
+function stk(item, sp) {
+  const e = el('stk'), pos = { t: 'top', b: 'bottom', l: 'left', r: 'right' };
+  e.style.cssText = `--s:${sp.s}px;--r:${sp.a}deg;` + Object.keys(pos).filter(k => sp[k] != null).map(k => `${pos[k]}:${sp[k]}px;`).join('');
+  if (item.startsWith('<svg')) e.innerHTML = item;
+  else { const im = new Image(); im.src = item; im.alt = ''; im.onerror = () => e.remove(); e.append(im); }
+  return e;
+}
+const addStk = (f, i, spots) => spots.forEach((sp, k) => f.append(stk(POOL[(i * 3 + k * 2) % POOL.length], sp)));
+
+// stiker melayang di belakang buku
+for (let i = 0; i < 14; i++) {
+  const s = el('fl'); s.innerHTML = BUILTIN[i % BUILTIN.length];
+  s.style.setProperty('--left', `${Math.random() * 94}%`);
+  s.style.setProperty('--size', `${28 + Math.random() * 30}px`);
+  s.style.setProperty('--duration', `${12 + Math.random() * 13}s`);
+  s.style.setProperty('--delay', `${-Math.random() * 24}s`);
+  s.style.setProperty('--drift', `${-55 + Math.random() * 110}px`);
+  $('#stickers').append(s);
+}
+
+// ---------- membangun buku: setiap slide = 1 lembar kertas ----------
+const slides = [{ type: 'sampul' }, ...CONFIG.slides], N = slides.length, leaves = [];
+function front(s, i) {
+  const f = el('face front');
+  if (s.type === 'sampul') {
+    f.classList.add('cov');
+    const c = el('ct'); c.append(el('', 'h1', CONFIG.sampul.judul), el('', 'p', CONFIG.sampul.sub)); f.append(c);
+    addStk(f, i, [{ t: 24, r: 26, s: 46, a: 14 }, { b: 30, l: 26, s: 46, a: -12 }, { b: 46, r: 34, s: 30, a: 8 }]);
+    return f;
+  }
+  const pc = el('pc');
+  if (s.type === 'foto') {
+    pc.classList.add('photo');
+    const pol = el('pol'), im = new Image(), ph = el('ph', 'div', '📷 ' + s.src + ' belum ada');
+    im.src = s.src; im.alt = s.caption || '';
+    im.onerror = () => { im.remove(); ph.style.display = 'block'; };
+    pol.append(el('tape'), im, ph, el('cap', 'p', s.caption || '')); pc.append(pol);
+  } else {
+    if (s.judul) pc.append(el('', 'h2', s.judul));
+    const p = el('', 'p', s.isi || ''); if (s.type === 'akhir') p.style.textAlign = 'center'; pc.append(p);
+    if (s.type === 'akhir' && s.foto) { const im = new Image(); im.src = s.foto; im.alt = ''; im.className = 'endfoto'; im.onerror = () => im.remove(); pc.append(im); }
+  }
+  f.append(pc, el('pn', 'i', String(i)));
+  addStk(f, i, [{ t: 8, r: 10, s: 44, a: 12 }, { b: 36, l: 8, s: 40, a: -14 }, { b: 34, r: 16, s: 26, a: 10 }]);
+  return f;
+}
+slides.forEach((s, i) => {
+  const L = el('leaf'); L.style.zIndex = N - i + 1;
+  const b = el('face back' + (i === 0 ? ' endp' : ''));
+  if (i) addStk(b, i + 2, [{ b: 28, r: 22, s: 40, a: -10 }]);
+  L.append(front(s, i), b); book.append(L); leaves.push(L);
+  $('#dots').append(el('', 'i'));
+});
+const dots = [...$('#dots').children]; let cur = 0;
+const sync = () => { dots.forEach((d, k) => d.classList.toggle('a', k === cur)); $('#prev').style.opacity = cur ? 1 : .35; $('#next').style.opacity = cur < N - 1 ? 1 : .35; };
+function turn(d) {
+  if (d > 0 && cur < N - 1) { leaves[cur].classList.add('flipped'); cur++; }
+  else if (d < 0 && cur > 0) { cur--; leaves[cur].classList.remove('flipped'); }
+  sync();
+}
+function toStart() { (function s() { if (cur > 0) { turn(-1); setTimeout(s, 140); } })(); }
+$('#prev').onclick = () => turn(-1); $('#next').onclick = () => turn(1);
+addEventListener('keydown', e => { if (e.key === 'ArrowRight') turn(1); if (e.key === 'ArrowLeft') turn(-1); });
+// geser jari / mouse
+let sx = null, sy = 0;
+book.addEventListener('pointerdown', e => { sx = e.clientX; sy = e.clientY; });
+book.addEventListener('pointercancel', () => sx = null);
+book.addEventListener('pointerup', e => {
+  if (sx === null) return;
+  const dx = e.clientX - sx, dy = e.clientY - sy; sx = null;
+  if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.2) turn(dx < 0 ? 1 : -1);
+});
+sync();
+
+const mute = $('#mute');
+mute.onclick = () => { audio.paused ? audio.play() : audio.pause(); };
+audio.onplay = () => mute.textContent = '♪'; audio.onpause = () => mute.textContent = '🔇';
+
+// ---------- confetti ----------
+const cv = $('#fx'), ctx = cv.getContext('2d'); let bits = [];
+const fit = () => { cv.width = innerWidth; cv.height = innerHeight; }; fit(); addEventListener('resize', fit);
+function boom() {
+  const col = ['#ffc95c', '#ff8fa3', '#fff3e6', '#9ad7ff', '#c7a6ff'];
+  for (let i = 0; i < 160; i++) bits.push({ x: innerWidth / 2, y: innerHeight * .45, vx: (Math.random() - .5) * 14, vy: -Math.random() * 14 - 3, s: Math.random() * 7 + 4, c: col[i % 5], r: Math.random() * 6 });
+  if (bits.length === 160) loop();
+}
+function loop() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  bits.forEach(b => { b.x += b.vx; b.y += b.vy; b.vy += .35; b.vx *= .99; b.r += .2; ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.r); ctx.fillStyle = b.c; ctx.fillRect(-b.s / 2, -b.s / 4, b.s, b.s / 2); ctx.restore(); });
+  bits = bits.filter(b => b.y < cv.height + 20);
+  if (bits.length) requestAnimationFrame(loop); else ctx.clearRect(0, 0, cv.width, cv.height);
+}
+
+// ---------- tiup lilin -> kejutan ----------
+let opened = false;
+$('#cake').onclick = () => {
+  if (opened) return; opened = true;
+  $('#cake').classList.add('out'); $('#hint').textContent = '🎉 Surprise! 🎉';
+  audio.play().catch(() => {});
+  boom(); setTimeout(boom, 450); setTimeout(boom, 900);
+  setTimeout(() => { $('#intro').classList.add('off'); $('#cards').classList.add('on'); }, 1800);
+};
+</script>
+</body>
+</html>
